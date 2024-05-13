@@ -1,8 +1,39 @@
 import { Link } from "react-router-dom";
 
 import { IconSortDescending } from "@tabler/icons-react";
+import { useEffect, useState } from "react";
 
-export default function BooksList({ booksData }) {
+export default function BooksList() {
+  const [search, setSearch] = useState("");
+  const [query, setQuery] = useState("JS");
+  const [books, setBooks] = useState([]);
+
+
+  useEffect(() => {
+    fetch(
+      `https://www.googleapis.com/books/v1/volumes?q=${query}&key=AIzaSyCbQRpeKJTIOHfIww1nJ9kfn9JncJgpREQ&maxResults=40&startIndex=0`
+    )
+      .then((res) => res.json())
+      .then((result) => {
+        setBooks(result.items);
+      })
+      .catch((error) => alert(error.message));
+  }, [query]);
+  console.log(books);
+
+  const getSearch = (e) => {
+    e.preventDefault();
+
+    if (search !== "") {
+      setQuery(search);
+      setSearch("");
+    } else {
+      alert("Enter Book Name!!");
+    }
+  };
+
+
+  // const booksData = useLoaderData();
   return (
     <div className="basis-9/12 ml-5">
       <h1 className="text-3xl mb-10">Books</h1>
@@ -45,34 +76,49 @@ export default function BooksList({ booksData }) {
         </div>
       </div>
 
+      <form onSubmit={getSearch}>
+        <input
+          type="text"
+          placeholder="Search Book..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+
+        <button type="submit">
+         Gozle
+        </button>
+      </form>
+
       <div className="flex flex-row flex-wrap p-4 mt-10 gap-8">
-        {booksData.map((books, key) => (
+        {books.map((book, key) => (
           <div
             className="relative max-w-48 max-h-96 rounded-xl overflow-hidden text-center cursor-pointer border p-3"
             key={key}
           >
-            <Link to={books.volumeInfo.previewLink}>
+            <Link to={book.volumeInfo.previewLink} target="_blank">
               <div className="h-64 rounded-xl">
                 <img
                   className="w-full h-full rounded-xl object-cover"
-                  src={books.volumeInfo.imageLinks.thumbnail}
-                  alt={books.volumeInfo.title}
+                  src={book.volumeInfo.imageLinks?.smallThumbnail}
+                  alt={book.volumeInfo.title}
                 />
               </div>
               <div className="overflow-hidden">
                 <h1 className="font-semibold text-lg px-2 mt-2 line-clamp-2 overflow-hidden whitespace-nowrap text-wrap">
-                  {books.volumeInfo.title}
+                  {book.volumeInfo.title}
                 </h1>
                 <p className="font-thin text-purple-700 text-sm uppercase">
-                  {books.volumeInfo.categories}
+                  {book.volumeInfo.categories}
                 </p>
               </div>
             </Link>
-            {books?.accessInfo.pdf["acsTokenLink"] !== undefined ? (
-              <button className="">Read</button>
+            {/* {book?.accessInfo.pdf["acsTokenLink"] !== undefined ? (
+              <button className="read--btn" onClick={() => checkIt(book?.id)}>
+                Read Online
+              </button>
             ) : (
-              <h3>Not Available</h3>
-            )}
+              <h3 className="null--point">Not Available</h3>
+            )} */}
           </div>
         ))}
         {/* {booksData &&
@@ -101,6 +147,8 @@ export default function BooksList({ booksData }) {
             </div>
           ))} */}
       </div>
+
+      
       <div className="flex flex-row justify-between">
         <span>Showing 12 from 50</span>
         <div className="flex flex-row">
