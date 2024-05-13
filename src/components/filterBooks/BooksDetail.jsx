@@ -4,12 +4,11 @@ import BooksItem from "./BooksItem";
 export default function BooksDetail() {
   const newsDetailData = useLoaderData();
   // const firstElem = newsDetailData.books[0]
-  console.log(newsDetailData.book_detail)
-  // console.log(firstElem)
+  console.log(newsDetailData.book_detail);
   return <BooksItem booksItem={newsDetailData.book_detail} />;
 }
 
-export async function loader({params}) {
+export async function loader({ params }) {
   const id = params.booksId;
   const response = await fetch("http://192.168.0.215:8001/api/books/" + id);
   return response;

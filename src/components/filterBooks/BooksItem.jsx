@@ -70,7 +70,11 @@ export default function BooksItem({ booksItem }) {
               />
               <div className="flex flex-col">
                 <p className=" text-gray-400 text-sm">Writen by</p>
-                <h1 className="font-semibold text-base">{booksItem.author.first_name + " " + booksItem.author.last_name}</h1>
+                <h1 className="font-semibold text-base">
+                  {booksItem.author.first_name +
+                    " " +
+                    booksItem.author.last_name}
+                </h1>
               </div>
             </div>
             <div className="flex flex-col">
@@ -96,11 +100,13 @@ export default function BooksItem({ booksItem }) {
           <div className="flex flex-row justify-between">
             <div className="flex flex-row">
               <div className="">
-                <span className="font-bold text-2xl">$15,63</span> <span className="line-through text-sm">$16,99</span> <span className="bg-red-500 px-2 rounded-lg text-sm text-white ">2%</span>
+                <span className="font-bold text-2xl">$15,63</span>{" "}
+                <span className="line-through text-sm">$16,99</span>{" "}
+                <span className="bg-red-500 px-2 rounded-lg text-sm text-white ">
+                  2%
+                </span>
               </div>
-              <div>
-                
-              </div>
+              <div></div>
             </div>
           </div>
         </div>

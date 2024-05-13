@@ -1,6 +1,6 @@
-import Books from './Books.jsx';
-import Filter from './Filter.jsx'
-import BookSlider from './bookSlider.jsx';
+import Books from "./Books.jsx";
+import Filter from "./Filter.jsx";
+import BookSlider from "./bookSlider.jsx";
 
 export default function FilterBooks() {
   return (

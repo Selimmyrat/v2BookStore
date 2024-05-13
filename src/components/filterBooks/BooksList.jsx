@@ -46,7 +46,36 @@ export default function BooksList({ booksData }) {
       </div>
 
       <div className="flex flex-row flex-wrap p-4 mt-10 gap-8">
-        {booksData &&
+        {booksData.map((books, key) => (
+          <div
+            className="relative max-w-48 max-h-96 rounded-xl overflow-hidden text-center cursor-pointer border p-3"
+            key={key}
+          >
+            <Link to={books.volumeInfo.previewLink}>
+              <div className="h-64 rounded-xl">
+                <img
+                  className="w-full h-full rounded-xl object-cover"
+                  src={books.volumeInfo.imageLinks.thumbnail}
+                  alt={books.volumeInfo.title}
+                />
+              </div>
+              <div className="overflow-hidden">
+                <h1 className="font-semibold text-lg px-2 mt-2 line-clamp-2 overflow-hidden whitespace-nowrap text-wrap">
+                  {books.volumeInfo.title}
+                </h1>
+                <p className="font-thin text-purple-700 text-sm uppercase">
+                  {books.volumeInfo.categories}
+                </p>
+              </div>
+            </Link>
+            {books?.accessInfo.pdf["acsTokenLink"] !== undefined ? (
+              <button className="">Read</button>
+            ) : (
+              <h3>Not Available</h3>
+            )}
+          </div>
+        ))}
+        {/* {booksData &&
           booksData.map((books) => (
             <div
               className="relative max-w-48 max-h-96 rounded-xl overflow-hidden text-center cursor-pointer border p-3"
@@ -70,7 +99,7 @@ export default function BooksList({ booksData }) {
                 </div>
               </Link>
             </div>
-          ))}
+          ))} */}
       </div>
       <div className="flex flex-row justify-between">
         <span>Showing 12 from 50</span>

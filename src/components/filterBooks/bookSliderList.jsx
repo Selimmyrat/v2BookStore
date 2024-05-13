@@ -43,7 +43,9 @@ export default function BookSliderList({ booksData }) {
                         src={books.files}
                         alt={books.name}
                       />
-                      <span className="absolute top-8 bg-red-500 font-semibold text-xl text-white px-5 py-1 rounded-r-xl">30%</span>
+                      <span className="absolute top-8 bg-red-500 font-semibold text-xl text-white px-5 py-1 rounded-r-xl">
+                        30%
+                      </span>
                     </div>
                     <h1 className="text-xl font-semibold mt-2">{books.name}</h1>
                     <div key={books.category.id}>

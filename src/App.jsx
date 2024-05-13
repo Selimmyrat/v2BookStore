@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Root from "./routes/root.jsx";
-// import ErrorPage from "./pages/ErrorPage.jsx";
+import ErrorPage from "./pages/ErrorPage.jsx";
 import NewsDatailPage, {
   loader as newsDeatailLoader,
 } from "./components/news/NewsDatail.jsx";
@@ -18,7 +18,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
-    // errorElement: <ErrorPage/>,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
