@@ -4,15 +4,23 @@ import BooksItem from "./BooksItem";
 export default function BooksDetail() {
   const newsDetailData = useLoaderData();
   // const firstElem = newsDetailData.books[0]
-  console.log(newsDetailData.book_detail);
-  return <BooksItem booksItem={newsDetailData.book_detail} />;
+  console.log(newsDetailData);
+  return <BooksItem booksItem={newsDetailData} />;
 }
 
-export async function loader({ params }) {
+export async function loader({params}) {
   const id = params.booksId;
-  const response = await fetch("http://192.168.0.215:8001/api/books/" + id);
+  console.log(id)
+  const response = await fetch(`https://www.googleapis.com/books/v1/volumes/${id}`);
+  console.log(response)
   return response;
 }
+
+// export async function loader({ params }) {
+//   const id = params.booksId;
+//   const response = await fetch("http://192.168.0.215:8001/api/books/" + id);
+//   return response;
+// }
 
 // export async function loader({params}) {
 //   const id = params.booksId;

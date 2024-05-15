@@ -1,13 +1,17 @@
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 import { IconSortDescending } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
+import Pagination from "./pagination";
+
+import { IconSearch } from "@tabler/icons-react";
+
+import './filterBooks.module.css'
 
 export default function BooksList() {
   const [search, setSearch] = useState("");
   const [query, setQuery] = useState("JS");
   const [books, setBooks] = useState([]);
-
 
   useEffect(() => {
     fetch(
@@ -26,12 +30,9 @@ export default function BooksList() {
 
     if (search !== "") {
       setQuery(search);
-      setSearch("");
-    } else {
-      alert("Enter Book Name!!");
+      setSearch();
     }
   };
-
 
   // const booksData = useLoaderData();
   return (
@@ -76,103 +77,23 @@ export default function BooksList() {
         </div>
       </div>
 
-      <form onSubmit={getSearch}>
-        <input
-          type="text"
-          placeholder="Search Book..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-
-        <button type="submit">
-         Gozle
-        </button>
-      </form>
-
-      <div className="flex flex-row flex-wrap p-4 mt-10 gap-8">
-        {books.map((book, key) => (
-          <div
-            className="relative max-w-48 max-h-96 rounded-xl overflow-hidden text-center cursor-pointer border p-3"
-            key={key}
-          >
-            <Link to={book.volumeInfo.previewLink} target="_blank">
-              <div className="h-64 rounded-xl">
-                <img
-                  className="w-full h-full rounded-xl object-cover"
-                  src={book.volumeInfo.imageLinks?.smallThumbnail}
-                  alt={book.volumeInfo.title}
-                />
-              </div>
-              <div className="overflow-hidden">
-                <h1 className="font-semibold text-lg px-2 mt-2 line-clamp-2 overflow-hidden whitespace-nowrap text-wrap">
-                  {book.volumeInfo.title}
-                </h1>
-                <p className="font-thin text-purple-700 text-sm uppercase">
-                  {book.volumeInfo.categories}
-                </p>
-              </div>
-            </Link>
-            {/* {book?.accessInfo.pdf["acsTokenLink"] !== undefined ? (
-              <button className="read--btn" onClick={() => checkIt(book?.id)}>
-                Read Online
-              </button>
-            ) : (
-              <h3 className="null--point">Not Available</h3>
-            )} */}
-          </div>
-        ))}
-        {/* {booksData &&
-          booksData.map((books) => (
-            <div
-              className="relative max-w-48 max-h-96 rounded-xl overflow-hidden text-center cursor-pointer border p-3"
-              key={books.id}
-            >
-              <Link to={`/books/${books.id}`}>
-                <div className="h-64 rounded-xl">
-                  <img
-                    className="w-full h-full rounded-xl object-cover"
-                    src={books.files}
-                    alt={books.name}
-                  />
-                </div>
-                <div className="overflow-hidden">
-                  <h1 className="font-semibold text-lg px-2 mt-2 line-clamp-2 overflow-hidden whitespace-nowrap text-wrap">
-                    {books.name}
-                  </h1>
-                  <p  className="font-thin text-purple-700 text-sm uppercase">
-                    {books.category.name}
-                  </p>
-                </div>
-              </Link>
-            </div>
-          ))} */}
-      </div>
-
-      
-      <div className="flex flex-row justify-between">
-        <span>Showing 12 from 50</span>
-        <div className="flex flex-row">
-          <button className="bg-purple-100 text-purple-600 hover:bg-purple-600 hover:text-white rounded-md px-5 py-1 mr-4">
-            {" "}
-            Prev{" "}
-          </button>
-          <div className="border rounded-md">
-            <button className="bg-purple-600 text-white hover:bg-purple-600 font-semibold hover:text-white rounded-md px-3 py-1 ">
-              1
-            </button>
-            <button className="hover:bg-purple-600 text-purple-600 font-semibold hover:text-white rounded-md px-3 py-1 mx-1">
-              2
-            </button>
-            <button className="hover:bg-purple-600 text-purple-600 font-semibold hover:text-white rounded-md px-3 py-1 ">
-              3
+      <div className="border rounded-xl p-2 mt-3">
+        <form onSubmit={getSearch}>
+          <div className="flex flex-row ">
+            <input
+              className="outline-none w-full"
+              type="search"
+              placeholder="Search Book..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <button type="submit">
+              <IconSearch stroke={2} />
             </button>
           </div>
-
-          <button className="bg-purple-100 text-purple-600 hover:bg-purple-600 hover:text-white rounded-md px-5 py-1 ml-4">
-            Next{" "}
-          </button>
-        </div>
+        </form>
       </div>
+      <Pagination data={books} />
     </div>
   );
 }

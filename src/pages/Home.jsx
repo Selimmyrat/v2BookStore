@@ -16,11 +16,11 @@ export default function Home() {
   );
 }
 
-export async function loader() {
-  const response = await fetch("http://192.168.0.215:8001/api/books");
-  const resData = await response.json();
-  return resData.books;
-}
+// export async function loader() {
+//   const response = await fetch("http://192.168.0.215:8001/api/books");
+//   const resData = await response.json();
+//   return resData.books;
+// }
 
 // export async function loader() {
 //   const response = await fetch(

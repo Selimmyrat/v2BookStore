@@ -8,6 +8,7 @@ import {
   IconShieldCheckFilled,
   IconBolt,
 } from "@tabler/icons-react";
+import { Link } from "react-router-dom";
 
 export default function BooksItem({ booksItem }) {
   return (
@@ -16,13 +17,13 @@ export default function BooksItem({ booksItem }) {
         <div className="w-full p-5 rounded-2xl">
           <img
             className="w-full rounded-xl"
-            src={booksItem.files}
-            alt={booksItem.name}
+            src={booksItem.volumeInfo.imageLinks.medium}
+            alt={booksItem.volumeInfo.title}
           />
         </div>
       </div>
       <div className="basis-8/12 w-full">
-        <h1 className="text-xl font-bold mb-4">{booksItem.name}</h1>
+        <h1 className="text-xl font-bold mb-4">{booksItem.volumeInfo.title}</h1>
         <div className="flex flex-col md:flex-row justify-between">
           <div className="basis-6/12 flex flex-row gap-x-4">
             <div className="flex items-center justify-center gap-1 p-1">
@@ -60,44 +61,48 @@ export default function BooksItem({ booksItem }) {
           </div>
         </div>
         <div className="mt-5">
-          <p>{booksItem.Description}</p>
+          {/* <p>{booksItem.Description}</p> */}
           <div className="flex flex-row justify-between mt-5">
-            <div className="flex flex-row">
-              <img
-                className="w-11 rounded-lg mr-4"
-                src={booksItem.files}
-                alt={booksItem.name}
-              />
-              <div className="flex flex-col">
-                <p className=" text-gray-400 text-sm">Writen by</p>
-                <h1 className="font-semibold text-base">
-                  {booksItem.author.first_name +
-                    " " +
-                    booksItem.author.last_name}
-                </h1>
-              </div>
+            <div className="flex flex-col">
+              <p className=" text-gray-400 text-sm">Writen by</p>
+              <h1 className="font-semibold text-base">
+                {booksItem.volumeInfo.authors.join(", ")}
+              </h1>
             </div>
             <div className="flex flex-col">
               <p className=" text-gray-400 text-sm">Publisher</p>
-              <h1 className="font-semibold text-base">Tagan Taganow</h1>
+              <h1 className="font-semibold text-base">
+                {booksItem.volumeInfo.publisher}
+              </h1>
             </div>
             <div className="flex flex-col">
               <p className=" text-gray-400 text-sm">Page</p>
-              <h1 className="font-semibold text-base">{booksItem.page}</h1>
+              <h1 className="font-semibold text-base">
+                {booksItem.volumeInfo.pageCount}
+              </h1>
             </div>
             <div className="flex flex-row">
               <button className="hover:bg-purple-600 hover:text-white bg-purple-200 text-purple-600 rounded-xl px-4 py-1 mr-4 flex items-center gap-2 text-sm">
                 <IconBolt stroke={5} className="w-4" />
                 <h1 className="uppercase font-bold">Free Shipping</h1>
               </button>
-              <button className="hover:bg-gray-200 hover:text-gray-600 bg-green-200 text-green-600 rounded-xl px-4 py-1 mr-4 flex items-center gap-2 text-sm">
-                <IconShieldCheckFilled stroke={2} className="w-4" />
-                <h1 className="uppercase font-bold">In Stock</h1>
-              </button>
+              <Link to={booksItem.volumeInfo.previewLink} target="__blank">
+                <button className="hover:bg-gray-200 hover:text-gray-600 bg-green-200 text-green-600 rounded-xl px-4 py-1 mr-4 flex items-center gap-2 text-sm">
+                  <IconShieldCheckFilled stroke={2} className="w-4" />
+                  <h1 className="uppercase font-bold">Read</h1>
+                </button>
+              </Link>
             </div>
           </div>
           <div className="border-t-4 border-gray-300 border-dashed my-8"></div>
-          <div className="flex flex-row justify-between">
+          <div>
+            <p
+              dangerouslySetInnerHTML={{
+                __html: booksItem.volumeInfo.description,
+              }}
+            ></p>
+          </div>
+          {/* <div className="flex flex-row justify-between">
             <div className="flex flex-row">
               <div className="">
                 <span className="font-bold text-2xl">$15,63</span>{" "}
@@ -108,7 +113,7 @@ export default function BooksItem({ booksItem }) {
               </div>
               <div></div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import Books from "./Books.jsx";
 import Filter from "./Filter.jsx";
-import BookSlider from "./bookSlider.jsx";
+// import BookSlider from "./bookSlider.jsx";
 
 export default function FilterBooks() {
   return (
@@ -9,7 +9,7 @@ export default function FilterBooks() {
         <Filter />
         <Books />
       </div>
-      <BookSlider />
+      {/* <BookSlider /> */}
     </div>
   );
 }
