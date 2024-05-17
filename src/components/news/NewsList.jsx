@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 
+import "@splidejs/react-splide/css";
+import "@splidejs/react-splide/css/skyblue";
+import "@splidejs/react-splide/css/sea-green";
+import "@splidejs/react-splide/css/core";
+
 export default function NewsList({ newsData }) {
   return (
     <div className="container mx-auto mt-28 mb-20">
@@ -71,13 +76,6 @@ export default function NewsList({ newsData }) {
                 </div>
               </div>
             </SplideSlide>
-            // <div key={news.id}>
-            //   <Link to={`/news/${news.id}`}>
-            //     <img src={`https://tmcell.tm/api/api/compress/news/${news.news_img}`} alt={news.title_tm} />
-            //     <h1>{news.title_tm}</h1>
-            //     <p dangerouslySetInnerHTML={{__html: news.description_tm}}></p>
-            //   </Link>
-            // </div>
           ))}
       </Splide>
     </div>

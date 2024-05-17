@@ -12,31 +12,36 @@ export default function BooksList() {
   const [search, setSearch] = useState("");
   const [query, setQuery] = useState("JS");
   const [books, setBooks] = useState([]);
+  const [totalBooks, setTotalBooks] = useState();
+  const [itemOffset, setItemOffset] = useState(0);
 
   useEffect(() => {
     fetch(
-      `https://www.googleapis.com/books/v1/volumes?q=${query}&key=AIzaSyCbQRpeKJTIOHfIww1nJ9kfn9JncJgpREQ&maxResults=40&startIndex=0`
+      `https://www.googleapis.com/books/v1/volumes?q=${query}&key=AIzaSyCbQRpeKJTIOHfIww1nJ9kfn9JncJgpREQ&maxResults=40&startIndex=${itemOffset}`
     )
       .then((res) => res.json())
       .then((result) => {
         setBooks(result.items);
+        setTotalBooks(result.totalItems)
       })
       .catch((error) => alert(error.message));
-  }, [query]);
-  console.log(books);
+  }, [query, itemOffset]);
 
   const getSearch = (e) => {
     e.preventDefault();
 
     if (search !== "") {
       setQuery(search);
-      setSearch();
     }
   };
 
+  const handleItemOffset = (offset) => {
+    setItemOffset(offset);
+  }
+
   // const booksData = useLoaderData();
   return (
-    <div className="basis-9/12 ml-5">
+    <div className="basis-12/12 ml-5">
       <h1 className="text-3xl mb-10">Books</h1>
       <div className="w-full flex flex-row justify-between border rounded-xl px-4 py-3">
         <div className="flex flex-row justify-center items-center">
@@ -93,7 +98,7 @@ export default function BooksList() {
           </div>
         </form>
       </div>
-      <Pagination data={books} />
+      <Pagination itemOffset={itemOffset} handleOffset={handleItemOffset} total={totalBooks} data={books} />
     </div>
   );
 }

@@ -1,16 +1,20 @@
+import foto from '../../assets/images/coverNotFound.jpg'
+
 import {
-  IconStarFilled,
-  IconBrandFacebookFilled,
-  IconBrandWhatsapp,
-  IconMail,
-  IconMessage,
-  IconThumbUp,
-  IconShieldCheckFilled,
-  IconBolt,
+  // IconStarFilled,
+  // IconBrandFacebookFilled,
+  // IconBrandWhatsapp,
+  // IconMail,
+  // IconMessage,
+  // IconThumbUp,
+  IconBook,
+  // IconBolt,
 } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 
 export default function BooksItem({ booksItem }) {
+  console.log(foto)
+
   return (
     <div className="container mx-auto flex flex-col lg:flex-row mt-52">
       <div className="basis-4/12 w-full">
@@ -19,12 +23,16 @@ export default function BooksItem({ booksItem }) {
             className="w-full rounded-xl"
             src={booksItem.volumeInfo.imageLinks.medium}
             alt={booksItem.volumeInfo.title}
+            onError={event => {
+              event.target.src = foto
+              event.onerror = null
+            }}
           />
         </div>
       </div>
       <div className="basis-8/12 w-full">
         <h1 className="text-xl font-bold mb-4">{booksItem.volumeInfo.title}</h1>
-        <div className="flex flex-col md:flex-row justify-between">
+        {/* <div className="flex flex-col md:flex-row justify-between">
           <div className="basis-6/12 flex flex-row gap-x-4">
             <div className="flex items-center justify-center gap-1 p-1">
               <IconStarFilled className="text-amber-500 w-4" />
@@ -59,7 +67,7 @@ export default function BooksItem({ booksItem }) {
               Email
             </button>
           </div>
-        </div>
+        </div> */}
         <div className="mt-5">
           {/* <p>{booksItem.Description}</p> */}
           <div className="flex flex-row justify-between mt-5">
@@ -82,13 +90,13 @@ export default function BooksItem({ booksItem }) {
               </h1>
             </div>
             <div className="flex flex-row">
-              <button className="hover:bg-purple-600 hover:text-white bg-purple-200 text-purple-600 rounded-xl px-4 py-1 mr-4 flex items-center gap-2 text-sm">
+              {/* <button className="hover:bg-purple-600 hover:text-white bg-purple-200 text-purple-600 rounded-xl px-4 py-1 mr-4 flex items-center gap-2 text-sm">
                 <IconBolt stroke={5} className="w-4" />
                 <h1 className="uppercase font-bold">Free Shipping</h1>
-              </button>
+              </button> */}
               <Link to={booksItem.volumeInfo.previewLink} target="__blank">
                 <button className="hover:bg-gray-200 hover:text-gray-600 bg-green-200 text-green-600 rounded-xl px-4 py-1 mr-4 flex items-center gap-2 text-sm">
-                  <IconShieldCheckFilled stroke={2} className="w-4" />
+                  <IconBook stroke={2} className="w-4" />
                   <h1 className="uppercase font-bold">Read</h1>
                 </button>
               </Link>

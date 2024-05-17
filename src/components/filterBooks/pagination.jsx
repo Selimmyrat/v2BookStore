@@ -2,26 +2,24 @@ import { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import { Link } from "react-router-dom";
 
-export default function Pagination(props) {
-  const { data } = props;
+import coverNotFound from '../../assets/images/coverNotFound.jpg'
+
+export default function Pagination({ data, total, itemOffset, handleOffset }) {
   const [currentItems, setCurrentItems] = useState([]);
   const [pageCount, setPageCount] = useState(0);
-  const [itemOffset, setItemOffset] = useState(0);
-  const itemsPerPage = 10;
+
+  const itemsPerPage = 30;
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
     console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-    setCurrentItems(data.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(data.length / itemsPerPage));
-  }, [itemOffset, itemsPerPage, data]);
+    setCurrentItems(data);
+    setPageCount(Math.ceil(total / itemsPerPage));
+  }, [itemOffset, itemsPerPage, data, total]);
 
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % data.length;
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`
-    );
-    setItemOffset(newOffset);
+    const newOffset = event.selected * itemsPerPage;
+    handleOffset(newOffset);
   };
 
   return (
@@ -34,12 +32,15 @@ export default function Pagination(props) {
               key={key}
             >
               <Link to={`/books/${book.id}`}>
-                
-              {/* to={book.volumeInfo.previewLink}  */}
+                {/* to={book.volumeInfo.previewLink}  */}
                 <div className="h-64 rounded-xl">
                   <img
                     className="w-full h-full rounded-xl "
-                    src={book.volumeInfo.imageLinks.smallThumbnail}
+                    src={book.volumeInfo.imageLinks?.smallThumbnail}
+                    onError={event => {
+                      event.target.src = coverNotFound
+                      event.onerror = null
+                    }}
                     alt={book.volumeInfo.title}
                   />
                 </div>
@@ -56,7 +57,7 @@ export default function Pagination(props) {
           );
         })}
       </div>
-
+      <p>{`Total books is: ${total}`}</p>
       <div className="flex flex-row justify-between mt-3">
         <p>{`Showing ${itemOffset} from  ${itemsPerPage + itemOffset}`}</p>
         <ReactPaginate
