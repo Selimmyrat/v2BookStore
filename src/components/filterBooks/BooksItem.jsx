@@ -1,4 +1,4 @@
-import foto from '../../assets/images/coverNotFound.jpg'
+import coverNotFound from "../../assets/images/coverNotFound.jpg";
 
 import {
   // IconStarFilled,
@@ -13,7 +13,6 @@ import {
 import { Link } from "react-router-dom";
 
 export default function BooksItem({ booksItem }) {
-  console.log(foto)
 
   return (
     <div className="container mx-auto flex flex-col lg:flex-row mt-52">
@@ -21,12 +20,8 @@ export default function BooksItem({ booksItem }) {
         <div className="w-full p-5 rounded-2xl">
           <img
             className="w-full rounded-xl"
-            src={booksItem.volumeInfo.imageLinks.medium}
+            src={(booksItem.volumeInfo.imageLinks.medium || booksItem.volumeInfo.imageLinks.small)  ?? coverNotFound}
             alt={booksItem.volumeInfo.title}
-            onError={event => {
-              event.target.src = foto
-              event.onerror = null
-            }}
           />
         </div>
       </div>

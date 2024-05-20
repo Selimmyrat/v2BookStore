@@ -1,12 +1,12 @@
 // import { Link } from "react-router-dom";
 
-import { IconSortDescending } from "@tabler/icons-react";
+// import { IconSortDescending } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import Pagination from "./pagination";
 
 import { IconSearch } from "@tabler/icons-react";
 
-import './filterBooks.module.css'
+import "./filterBooks.module.css";
 
 export default function BooksList() {
   const [search, setSearch] = useState("");
@@ -14,6 +14,7 @@ export default function BooksList() {
   const [books, setBooks] = useState([]);
   const [totalBooks, setTotalBooks] = useState();
   const [itemOffset, setItemOffset] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch(
@@ -22,14 +23,18 @@ export default function BooksList() {
       .then((res) => res.json())
       .then((result) => {
         setBooks(result.items);
-        setTotalBooks(result.totalItems)
+        setTotalBooks(result.totalItems);
+        setLoading(false);
       })
-      .catch((error) => alert(error.message));
+      .catch((error) => {
+        alert(error.message);
+        setLoading(false);
+      });
   }, [query, itemOffset]);
 
   const getSearch = (e) => {
     e.preventDefault();
-
+    setLoading(true);
     if (search !== "") {
       setQuery(search);
     }
@@ -37,13 +42,13 @@ export default function BooksList() {
 
   const handleItemOffset = (offset) => {
     setItemOffset(offset);
-  }
+  };
 
   // const booksData = useLoaderData();
   return (
-    <div className="basis-12/12 ml-5">
+    <div className="ml-5">
       <h1 className="text-3xl mb-10">Books</h1>
-      <div className="w-full flex flex-row justify-between border rounded-xl px-4 py-3">
+      {/* <div className="w-full flex flex-row justify-between border rounded-xl px-4 py-3">
         <div className="flex flex-row justify-center items-center">
           <p className="font-semibold mr-3 text-sm">Today</p>
           <p className="font-thin mr-3 text-sm">This Week</p>
@@ -80,7 +85,7 @@ export default function BooksList() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="border rounded-xl p-2 mt-3">
         <form onSubmit={getSearch}>
@@ -98,7 +103,44 @@ export default function BooksList() {
           </div>
         </form>
       </div>
-      <Pagination itemOffset={itemOffset} handleOffset={handleItemOffset} total={totalBooks} data={books} />
+      {loading ? (
+        <div className="flex justify-center items-center bg-white mt-10">
+          <button
+            type="button"
+            className="flex flex-row justify-center items-center"
+            disabled
+          >
+            <svg
+              className="animate-spin -ml-1 mr-3 h-10  w-10 text-purple-600"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              ></circle>
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
+            </svg>
+            Loading...
+          </button>
+        </div>
+      ) : (
+        <Pagination
+          itemOffset={itemOffset}
+          handleOffset={handleItemOffset}
+          total={totalBooks}
+          data={books}
+        />
+      )}
     </div>
   );
 }
