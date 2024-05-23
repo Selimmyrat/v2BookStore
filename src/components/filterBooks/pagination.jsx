@@ -62,11 +62,11 @@ export default function Pagination({
         <p>{`Showing ${itemOffset} from  ${itemsPerPage + itemOffset}`}</p>
         <ReactPaginate
           breakLabel="..."
-          nextLabel=">"
+          nextLabel="→"
+          previousLabel="←" 
+          pageCount={pageCount}
           onPageChange={handlePageClick}
           pageRangeDisplayed={2}
-          pageCount={pageCount}
-          previousLabel="<"
           renderOnZeroPageCount={null}
           containerClassName="flex flex-row"
           pageLinkClassName="hover:bg-purple-600 text-purple-600 font-semibold hover:text-white rounded-md px-3 py-1 mx-1"
