@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import Root from "./routes/Root.jsx";
-import ErrorPage from "./pages/ErrorPage.jsx";
+// import ErrorPage from "./pages/ErrorPage.jsx";
 import NewsDetailPage from "./components/news/NewsDateil.jsx";
 import Home from "./pages/Home.jsx";
 import News from "./components/news/News.jsx";
@@ -18,7 +18,7 @@ function App() {
         <Route path="/news/:newsId" element={<NewsDetailPage />} />
         <Route path="/books" element={<Books />} />
         <Route path="/books/:booksId" element={<BooksDetailPage />} />
-        <Route path="*" element={<ErrorPage />} />
+        {/* <Route path="*" element={<ErrorPage />} /> */}
       </Routes>
     </Router>
   );
